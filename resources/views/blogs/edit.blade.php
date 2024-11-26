@@ -38,8 +38,9 @@
     <div class="container mt-5">
         <h1>Tambah Blog Baru</h1>
 
-        <form action="{{ route('blogs.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+        <form action="{{ route('blogs.update', $blog->id) }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    @method('PUT') 
             <div class="mb-3">
                 <label for="judul" class="form-label">Judul Blog</label>
                 <input type="text" class="form-control" id="judul" name="judul" required>
@@ -58,7 +59,6 @@
             </div>
             <button type="submit" class="btn btn-primary">Simpan Blog</button>
         </form>
-        <a href="{{ route('blogs.index') }}">Kembali ke daftar blog</a>
     </div>
 </body>
 </html>

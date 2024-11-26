@@ -9,23 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('blogs', function (Blueprint $table) {
-            $table->id();
-            $table->string('judul');
-            $table->text('isi');
-            $table->string('pembuat');
+        Schema::table('blogs', function (Blueprint $table) {
             $table->string('foto')->nullable(); // Tambahkan kolom 'foto'
-            $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('blogs');
+        Schema::table('blogs', function (Blueprint $table) {
+            $table->dropColumn('foto'); // Hapus kolom 'foto' jika rollback
+        });
     }
 };
