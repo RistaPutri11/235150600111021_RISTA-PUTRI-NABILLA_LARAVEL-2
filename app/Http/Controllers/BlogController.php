@@ -129,4 +129,16 @@ public function store(Request $request)
     // Redirect dengan pesan sukses
     return redirect()->route('blogs.list')->with('success', 'Blog berhasil dibuat!');
 }
+
+public function destroy($id)
+{
+    // Cari blog berdasarkan ID
+    $blog = Blog::findOrFail($id);
+
+    // Hapus blog
+    $blog->delete();
+
+    // Redirect ke daftar blog dengan pesan sukses
+    return redirect()->route('blogs.index')->with('success', 'Blog berhasil dihapus!');
+}
 }

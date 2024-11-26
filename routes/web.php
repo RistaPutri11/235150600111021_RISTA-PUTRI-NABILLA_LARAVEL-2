@@ -83,3 +83,4 @@ Route::put('/blogs/{id}', [BlogController::class, 'update'])->name('blogs.update
 
 // Rute untuk hapus blog
 Route::delete('/blogs/{id}', [BlogController::class, 'destroy'])->name('blogs.destroy');
+Route::resource('blogs', BlogController::class);
