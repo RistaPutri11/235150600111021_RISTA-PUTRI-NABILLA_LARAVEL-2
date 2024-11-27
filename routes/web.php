@@ -9,9 +9,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::post('/login', [LoginController::class, 'login'])->middleware('web');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -19,6 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+ 
 require __DIR__.'/auth.php';
 // create.blade
 Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create');
@@ -46,16 +45,6 @@ Route::get('/blogs/{id}', [BlogController::class, 'showBlog']);
 
 Route::delete('/blogs/{id}', [BlogController::class, 'deleteBlog']);
 
-// Route::get('/blogs/{id}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
-
-// Route::put('/blogs/{id}', [BlogController::class, 'update'])->name('blogs.update');
-
-// Route::post('/tambah', [BlogController::class, 'createBlog']);
-
-// Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create');
-
-// Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
-
 Route::get('/foto', [FotoController::class, 'show']);
 
 Route::resource('blogs', BlogController::class);
@@ -75,14 +64,6 @@ Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 
 // Route untuk form membuat blog baru
 Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create');
-
-// Route::get('/blogs', [BlogController::class, 'showBlogs'])->name('blogs.index');
-// Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create');
-// Route::post('/blogs', [BlogController::class, 'createBlog'])->name('blogs.store');
-// Route::get('/blogs/{id}', [BlogController::class, 'showBlog'])->name('blogs.show');
-// Route::get('/blogs/{id}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
-// Route::put('/blogs/{id}', [BlogController::class, 'update'])->name('blogs.update');
-// Route::delete('/blogs/{id}', [BlogController::class, 'deleteBlog'])->name('blogs.delete');
 
 // Rute untuk halaman daftar blog
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
@@ -149,24 +130,12 @@ Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/list', [BlogController::class, 'list'])->name('blogs.list');
 Route::get('/blogs/list', [BlogController::class, 'index'])->name('blogs.list');
 
-//      Route::middleware('auth')->group(function () {
-//         Route::get('/dashboard', function () {
-//             return view('dashboard');
-//         });
-    
-//         // Rute yang membutuhkan autentikasi
-//         Route::get('/blogs', [App\Http\Controllers\BlogController::class, 'index'])->name('blogs.index');
-//         Route::get('/blogs/create', [App\Http\Controllers\BlogController::class, 'create'])->name('blogs.create');
-//     });
+Route::middleware('auth')->group(function () {
+     Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
+     Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create');
+     Route::post('/blogs', [BlogController::class, 'store'])->name('blogs.store');
+     
+ });
+ 
+ Route::get('/', [BlogController::class, 'index'])->name('index');
 
-// //Rute yang dilindungi oleh middleware auth
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/registrasi', [DashboardController::class, 'index'])->name('dashboard');
-// });
-
-// // Rute untuk halaman login
-// Route::get('login', [AuthenticatedSessionController::class, 'create'])
-//     ->middleware('guest')
-//     ->name('login');
-
-// Route::middleware('auth')->get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
