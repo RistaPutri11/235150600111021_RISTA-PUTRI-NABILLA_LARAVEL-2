@@ -95,6 +95,7 @@ public function index()
     return view('blogs.index', compact('blogs')); // Atau return view('list', ['blogs' => $blogs]);
 }
 
+
 public function create()
 {
     return view('blogs.create'); // Menampilkan form create
@@ -106,7 +107,7 @@ public function store(Request $request)
     $validatedData = $request->validate([
         'judul' => 'required|max:255',
         'pembuat' => 'required|max:255',
-        'isi' => 'required',
+        'konten' => 'required',
         'foto' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048', // validasi foto (optional)
     ]);
 
@@ -121,13 +122,12 @@ public function store(Request $request)
     Blog::create([
         'judul' => $validatedData['judul'],
         'pembuat' => $validatedData['pembuat'],
-        'isi' => $validatedData['isi'],
+        'konten' => $validatedData['konten'],
         'foto' => $fotoPath,
     ]);
 
     // Redirect dengan pesan sukses
-    return redirect()->route('blogs.index')->with('success', 'Blog berhasil dibuat!');
-    // return redirect()->route('blogs.list')->with('success', 'Blog berhasil dibuat!');
+    return redirect()->route('blogs.list')->with('success', 'Blog berhasil dibuat!');
 }
 
 public function destroy($id)
@@ -140,10 +140,5 @@ public function destroy($id)
 
     // Redirect ke daftar blog dengan pesan sukses
     return redirect()->route('blogs.index')->with('success', 'Blog berhasil dihapus!');
-}
-public function list()
-{
-    $blogs = Blog::all();
-    return redirect()->route('blogs.list')->with('success', 'Blog berhasil dibuat!');
 }
 }
